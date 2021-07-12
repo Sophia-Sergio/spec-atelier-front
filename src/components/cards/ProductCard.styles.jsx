@@ -35,8 +35,8 @@ export const Root = styled.div`
 	background-color: ${({ selected = false }) =>
 		selected ? '#F2F2F2' : '#FFF'};
 	border: 1px solid
-		${({ hover = false, selected = false }) =>
-			hover && !selected ? '#31cbb7' : '#E0E0E0'};
+		${({ hover = false, selected = false, isItemsUsed }) =>
+			(hover && !selected) || isItemsUsed ? '#31cbb7' : '#E0E0E0'};
 	border-radius: 9px;
 	cursor: pointer;
 	display: inline-grid;

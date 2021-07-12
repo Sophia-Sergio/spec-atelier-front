@@ -48,6 +48,7 @@ const ProductCard = (props) => {
 		productId,
 		canEdit,
 		canDelete,
+		itemsUsed,
 	} = props;
 	const [hover, setHover] = useState(false);
 	const [showDelete, setShowDelete] = useState(false);
@@ -82,10 +83,10 @@ const ProductCard = (props) => {
 		setShowDelete(false);
 	};
 
-	const handleConfirm = async() => {
+	const handleConfirm = async () => {
 		handleCloseDelete();
 		dispatch(onDeleteProduct(productId));
-	}
+	};
 
 	const photoStyles = {
 		backgroundImage: `url('${photo || noPhoto}')`,
@@ -96,7 +97,7 @@ const ProductCard = (props) => {
 	return (
 		<>
 			<Root
-				hover={hover}
+				hover={hover || itemsUsed}
 				selected={selected}
 				onClick={onClickSeeMore}
 				onMouseEnter={handleCardMouseEnter}
@@ -125,11 +126,17 @@ const ProductCard = (props) => {
 							productId={productId}
 						/>
 					</Actions>
-					<SeeMore hover={hover} show={showSeeMore} onClick={onClickSeeMore}>
+					<SeeMore
+						hover={hover || itemsUsed}
+						show={showSeeMore}
+						onClick={onClickSeeMore}
+					>
 						Ver más
 					</SeeMore>
 				</Footer>
-				{hover && !selected && canAdd && <Add onClick={onClickCard} />}
+				{(hover || itemsUsed) && !selected && canAdd && (
+					<Add onClick={onClickCard} />
+				)}
 				{selected && <Check onClick={onClickCard} />}
 				{(canEdit || canDelete) && (
 					<DotsIcon src={threeDotsVerticalSource} onClick={handleShowActions} />

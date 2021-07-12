@@ -174,6 +174,7 @@ const SpecDocument = () => {
 				<AddMenuItem onClick={handleShowProducts}>Añadir producto</AddMenuItem>
 				<AddMenuItem onClick={handleCreateProduct}>Crear producto</AddMenuItem>
 			</Dropdown>
+
 			{Boolean(blockAnchor) && selectedBlock && (
 				<Dropdown
 					anchorRef={blockAnchor}
@@ -334,7 +335,11 @@ const SpecDocument = () => {
 			<AddIcon
 				alt="Agregar sección"
 				src={specAddSource}
-				onClick={handleAddMenuOpen}
+				onClick={
+					window.matchMedia(MAX_SCREEN_SMALL_NAV_JS).matches
+						? handleShowProducts
+						: handleAddMenuOpen
+				}
 			/>
 		</Root>
 	);

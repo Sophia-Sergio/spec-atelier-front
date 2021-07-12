@@ -8,7 +8,10 @@ import {
 	uploadProductDocuments,
 } from '../../services/products.service';
 import { onShowAlertSuccess } from '../alert/Alert.actions';
-import { setFilters } from '../products-list/ProductsList.actions';
+import {
+	setFilters,
+	cleanProductListData,
+} from '../products-list/ProductsList.actions';
 
 export const GET_SPEC_PRODUCTS_SYSTEMS = 'GET_SPEC_PRODUCTS_SYSTEMS';
 export const GET_SPEC_PRODUCTS_SYSTEMS_ERROR =
@@ -76,7 +79,7 @@ export const onCreateSpecProduct = ({ documents, images }) => async (
 			brand: stepTwo.brand.label,
 			unit: stepTwo.unit,
 			price: stepTwo.price,
-			reference: stepTwo.reference
+			reference: stepTwo.reference,
 		};
 		const response = await createProduct(payload);
 
@@ -94,6 +97,7 @@ export const onCreateSpecProduct = ({ documents, images }) => async (
 		return batch(() => {
 			dispatch(onActionCreator(CREATE_SPEC_PRODUCT_SUCCESS));
 			dispatch(onShowAlertSuccess({ message: 'Producto creado exitosamente' }));
+			dispatch(cleanProductListData());
 			dispatch(
 				setFilters({
 					...productFilters,

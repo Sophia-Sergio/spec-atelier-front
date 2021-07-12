@@ -45,7 +45,15 @@ module.exports = env => {
         },
         {
           test: /\.scss$/,
-          loader: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+          use: [
+            { loader: MiniCssExtractPlugin.loader,
+              options: {
+                publicPath: path.join(__dirname, "public")
+              }
+            },
+            { loader: 'css-loader' },
+            { loader: 'sass-loader' }
+          ]
         },
         {
           test: /\.(svg|png|jpg|gif|ttf|eot|woff|woff2)$/i,
@@ -53,6 +61,10 @@ module.exports = env => {
             loader: 'file-loader',
           },
         },
+        {
+          test: /\.html$/,
+          loader: 'html-loader'
+        }
       ],
     },
     externals: ['window'],

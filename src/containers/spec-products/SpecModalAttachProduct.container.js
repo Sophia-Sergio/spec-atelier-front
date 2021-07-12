@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, Button } from '../../components/SpecComponents';
 import checkboxOffSource from '../../assets/images/icons/checkbox-off.svg';
 import checkboxOnSource from '../../assets/images/icons/checkbox-on.svg';
@@ -24,7 +24,7 @@ function SpecModalAttachProduct({
 	onClose,
 	product,
 }) {
-	const { items = [], sections = [] } = product;
+	const { items = [], sections = [], project_spec_info } = product;
 
 	const [selectedOptions, setSelectedOptions] = useState([]);
 
@@ -71,17 +71,17 @@ function SpecModalAttachProduct({
 										.filter(({ section_id }) => section_id === id)
 										.map((item) => {
 											const { id: itemId, name: itemName } = item;
-											const selected = selectedOptions.find(
-												(selectedOption) => selectedOption.id === itemId,
-											);
+											const selected = selectedOptions.find((selectedOption) => selectedOption.id === itemId);
+											const isAdded = project_spec_info?.items_used.find((addedOption) => addedOption.id === itemId)
 											return (
 												<Option
 													key={itemId}
-													onClick={handleClickOption(item, selected)}
+													disabled={isAdded}
+													onClick={!isAdded && handleClickOption(item, selected)}
 												>
 													<OptionCheckboxIcon
 														src={
-															selected ? checkboxOnSource : checkboxOffSource
+															(selected || isAdded) ? checkboxOnSource : checkboxOffSource
 														}
 													/>
 													<OptionText>{itemName}</OptionText>

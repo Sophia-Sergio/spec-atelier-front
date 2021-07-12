@@ -113,13 +113,14 @@ export const Option = styled.section`
 	align-items: center;
 	box-sizing: border-box;
 	color: #212121;
-	cursor: pointer;
+	cursor: ${({ disabled }) => disabled ? 'default' : 'pointer'};;
 	display: flex;
 	font-family: Lato;
 	font-size: 12px;
 	letter-spacing: 0.86px;
 	padding: 10px 16px;
 	width: 100%;
+	background-color: ${({ disabled }) => disabled ? '#eee' : 'none'};
 
 	&:hover {
 		background-color: #eee;

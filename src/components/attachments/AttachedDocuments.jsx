@@ -49,23 +49,32 @@ const AttachedFiles = (props) => {
 				const pdfDocuments = docs.filter((doc) => doc.name.includes('.pdf'));
 				const dwgDocument = docs.find((doc) => doc.name.includes('.dwg'));
 				const rvtDocument = docs.find((doc) => doc.name.includes('.rvt'));
+				const rfaDocument = docs.find((doc) => doc.name.includes('.rfa'));
 
-				if (
-					document.name.includes('.pdf') &&
-					pdfDocuments.length >= maxSize - 2
-				) {
+				const docAlreadyExist = !!docs.find(
+					(doc) => doc.name === document.name,
+				);
+
+				const containDwg = document.name.includes('.dwg') && dwgDocument;
+				const containRvt =
+					document.name.includes('.rvt') && (rvtDocument || rfaDocument);
+				const containRfa =
+					document.name.includes('.rfa') && (rvtDocument || rfaDocument);
+				const containBim = containRvt || containRfa;
+				const containMaxPdfs =
+					document.name.includes('.pdf') && pdfDocuments.length >= maxSize - 2;
+				const containMaxDocs = docs.length >= maxSize;
+
+				if (containDwg || containBim || containMaxDocs || containMaxPdfs) {
+					onReject(
+						`Puedes subir hasta ${maxSize} documentos: ${
+							maxSize - 2
+						} PDF, 1 DWG y 1 RVT o 1 RFA`,
+					);
 					return docs;
 				}
-
-				if (document.name.includes('.dwg') && dwgDocument) {
-					return docs;
-				}
-
-				if (document.name.includes('.rvt') && rvtDocument) {
-					return docs;
-				}
-
-				if (docs.length >= maxSize) {
+				if (docAlreadyExist) {
+					onReject('Este documento ya lo agregaste, intenta con otro.');
 					return docs;
 				}
 
@@ -73,11 +82,12 @@ const AttachedFiles = (props) => {
 			}, [].concat(documents));
 
 			handleClose();
+
 			if (allDocuments.length >= maxSize || !attachedDocuments.length) {
 				onReject(
 					`Puedes subir hasta ${maxSize} documentos: ${
 						maxSize - 2
-					} PDF, 1 DWG y 1 RVT'`,
+					} PDF, 1 DWG y 1 RVT o 1 RFA`,
 				);
 			}
 			onChange(attachedDocuments);
@@ -124,7 +134,7 @@ const AttachedFiles = (props) => {
 									</EmptyAction>
 									<EmptyText>{`Puedes subir hasta ${maxSize} documentos: ${
 										maxSize - 2
-									} PDF, 1 DWG y 1 RVT`}</EmptyText>
+									} PDF, 1 DWG y 1 RVT o 1 RFA`}</EmptyText>
 								</EmptyBody>
 							</Empty>
 						)}

@@ -4,7 +4,7 @@ import { useComboBox } from '../../components/inputs/Inputs.hooks';
 import ComboBox from '../../components/inputs/ComboBox';
 import { Button } from '../../components/SpecComponents';
 import { Container, Content } from './ButtonComboBox.styles';
-import { mapToSelector } from '../../helpers/helpers';
+import { mapToSelector, isArraysEquals } from '../../helpers/helpers';
 
 const propTypes = {
 	options: PropTypes.arrayOf(
@@ -93,7 +93,7 @@ const ButtonComboBox = ({
 	const innerRef = onClickOusite(() => {
 		if (!isOpen) return;
 		set(values);
-		if (onChangeSubmit) submitCallback(tempValues);
+		if (onChangeSubmit && !isArraysEquals(values, tempValues)) submitCallback(tempValues);
 		else setIsOpen(false);
 	});
 

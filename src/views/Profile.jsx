@@ -4,7 +4,7 @@ import AppLayout from '../components/layouts/AppLayout';
 import Navbar from '../containers/navbar/Navbar.container';
 import Footer from '../components/footer';
 import ProfileHeader from '../containers/profile-header/ProfileHeader';
-import ProductListContainer from '../containers/products-list/ProductsList.container';
+import ProductsListContainer from '../containers/products-list/ProductsList.container';
 import { ButtonCreateContainer, PaddingContainer } from './Products.styles';
 import ProfileChangePicture from '../containers/profile-change-picture/ProfileChangePicture';
 import { onShowSpecCreateProductSuccess } from '../containers/spec-create-product/SpecCreateProduct.actions';
@@ -40,37 +40,38 @@ const Profile = () => {
 			<ProfileHeader />
 			<PaddingContainer>
 				{!!Object.keys(user).length && !loading && (
-          <CustomTabs>
-            <Tab title="Mis Productos">
-              <>
-                <ButtonCreateContainer>
-                  <Button onClick={handleCreateProduct} variant="primary">
-                    <i className="fa fa-plus" style={{ marginRight: '11px' }} />{' '}
-                    Crear
-                  </Button>
-                </ButtonCreateContainer>
-                <ProductListContainer
-                  extraFilters={product_filter}
-                  withoutPadding
+					<CustomTabs>
+						<Tab title="Mis Productos">
+							<>
+								<ButtonCreateContainer>
+									<Button onClick={handleCreateProduct} variant="primary">
+										<i className="fa fa-plus" style={{ marginRight: '11px' }} />{' '}
+										Crear
+									</Button>
+								</ButtonCreateContainer>
+								<ProductsListContainer
+									extraFilters={product_filter}
+									withoutPadding
 									canEdit
 									canDelete
-                />
-              </>
-            </Tab>
-					{user?.client_role && !loading && (
-						<Tab title="Mis estadísticas">
-							<CustomTabs isProfileStatsTabs>
-								<Tab title="Proyectos especificados">
-									<ProfileStats stat={PROJECTS} />
-								</Tab>
-								<Tab title="Mis productos">
-									<ProfileStats stat={PRODUCTS} />
-								</Tab>
-							</CustomTabs>
+									viewKey='profile'
+								/>
+							</>
 						</Tab>
-					)}
-				</CustomTabs>
-      )}
+						{user?.client_role && !loading && (
+							<Tab title="Mis estadísticas">
+								<CustomTabs isProfileStatsTabs>
+									<Tab title="Proyectos especificados">
+										<ProfileStats stat={PROJECTS} />
+									</Tab>
+									<Tab title="Mis productos">
+										<ProfileStats stat={PRODUCTS} />
+									</Tab>
+								</CustomTabs>
+							</Tab>
+						)}
+					</CustomTabs>
+				)}
 			</PaddingContainer>
 			<ProfileChangePicture />
 			<SpecCreateProductOneContainer />

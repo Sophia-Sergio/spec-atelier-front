@@ -13,13 +13,15 @@ import {
 	SET_SELECTED_ALL,
 	DELETE_PRODUCT,
 	DELETE_PRODUCT_SUCCESS,
-	DELETE_PRODUCT_ERROR
+	DELETE_PRODUCT_ERROR,
+	CLEAN_PRODUCT_LIST_DATA,
 } from './ProductsList.actions';
 
 export const productsListInitialState = {
 	filters: {
 		page: 0,
 		limit: 10,
+		view: null,
 	},
 	products: [],
 	items: [],
@@ -56,6 +58,7 @@ const productsListReducer = (
 			return {
 				...state,
 				...payload,
+				products: [...state.products, ...payload.products],
 				loading: false,
 				error: false,
 			};
@@ -88,6 +91,11 @@ const productsListReducer = (
 		case CLEAN_PRODUCT_LIST_STORE:
 			return {
 				...productsListInitialState,
+			};
+		case CLEAN_PRODUCT_LIST_DATA:
+			return {
+				...productsListInitialState,
+				filters: state.filters,
 			};
 		case SET_FILTERS:
 			return {

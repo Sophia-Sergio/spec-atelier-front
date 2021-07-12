@@ -4,8 +4,8 @@ import { Button, Loading } from '../../components/SpecComponents';
 import { ButtonSection, LoadingContainer } from './ProductsListSeeMore.styles';
 import { setFilters } from './ProductsList.actions';
 
-const ProductsListSeeMore = ({ filters, initialFilters }) => {
-	const { products, total } = useSelector((state) => state.productsList);
+const ProductsListSeeMore = ({ filters }) => {
+	const { products, total, nextPage } = useSelector((state) => state.productsList);
 	const [showButton, setShowButton] = useState(true);
 	const [loading, setLoading] = useState(false);
 
@@ -16,7 +16,7 @@ const ProductsListSeeMore = ({ filters, initialFilters }) => {
 		dispatch(
 			setFilters({
 				...filters,
-				limit: filters.limit + initialFilters.limit,
+				page: nextPage,
 			}),
 		);
 	};

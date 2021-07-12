@@ -19,6 +19,7 @@ const Collaborator = () => {
 					extraFilters={{ limit: 6, client: id }}
 					withFilter={false}
 					withSearch={false}
+					viewKey='brand_products'
 				/>
 				<ContactFormModalContainer type="client" />
 				<ProductModalContainer />

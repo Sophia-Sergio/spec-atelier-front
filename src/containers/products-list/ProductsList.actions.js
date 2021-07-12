@@ -29,6 +29,7 @@ export const SET_SELECTED_ALL = 'SET_SELECTED_ALL';
 export const SET_FILTERS = 'SET_FILTERS';
 
 export const CLEAN_PRODUCT_LIST_STORE = 'CLEAN_PRODUCT_LIST_STORE';
+export const CLEAN_PRODUCT_LIST_DATA = 'CLEAN_PRODUCT_LIST_DATA';
 
 export const DELETE_PRODUCT = 'DELETE_PRODUCT';
 export const DELETE_PRODUCT_SUCCESS = 'DELETE_PRODUCT_SUCCESS';
@@ -36,6 +37,9 @@ export const DELETE_PRODUCT_ERROR = 'DELETE_PRODUCT_ERROR';
 
 export const cleanStoreProductList = () => (dispatch) =>
 	dispatch(onActionCreator(CLEAN_PRODUCT_LIST_STORE));
+
+export const cleanProductListData = () => (dispatch) =>
+	dispatch(onActionCreator(CLEAN_PRODUCT_LIST_DATA));
 
 export const getProduct = (clientId) => async (dispatch) => {
 	try {

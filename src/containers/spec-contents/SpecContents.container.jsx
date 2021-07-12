@@ -129,7 +129,7 @@ const SpecContents = () => {
 											title={product.element.title}
 											href={`${pathname}#${product.id}`}
 											onClick={() => {
-												if (MAX_SCREEN_SMALL_NAV_JS)
+												if (window.matchMedia(MAX_SCREEN_SMALL_NAV_JS).matches)
 													dispatch(onHideSpecContents());
 											}}
 										>
